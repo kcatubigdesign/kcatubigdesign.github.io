@@ -245,10 +245,10 @@
     .marquee-track {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: px;
       white-space: nowrap;
       animation: marquee 28s linear infinite;
-      padding-right: 32px;
+      padding-right: px;
       flex-shrink: 0;
     }
     .marquee-strip:hover .marquee-track { animation-play-state: paused; }
@@ -294,7 +294,6 @@
       flex: 1;
       display: flex;
       align-items: center;
-      padding: 40px 60px 40px var(--px);
       border-bottom: 1px solid var(--gray-200);
       cursor: pointer;
       transition: background 0.25s, border-color 0.25s;
@@ -323,10 +322,12 @@
       align-items: flex-start;
       font-size: clamp(22px, 2.4vw, 34px);
       line-height: normal;
+      width: 100%;
+      padding: 40px 60px 40px var(--px);
     }
     .project-num {
       font-family: var(--font-body);
-      font-weight: ;
+      font-weight: 300;
       color: var(--accent);
       width: 43px;
       flex-shrink: 0;
@@ -334,7 +335,7 @@
     }
     .project-name {
       font-family: var(--font-display);
-      font-weight: 600;
+      font-weight: 500;
       font-style: normal;
       color: var(--text-primary);
       transition: color 0.25s;
@@ -343,8 +344,8 @@
     @media (max-width: 768px) {
       .work-section { width: 100vw; }
       .projects-list { flex: 0 0 100%; width: 100%; }
-      .project-row { flex: none; padding: 32px 20px; min-height: 80px; }
-      .project-row-inner { font-size: 28px; }
+      .project-row { flex: none; min-height: 80px; }
+      .project-row-inner { font-size: 28px; padding: 32px 20px; width: 100%; }
       .project-name { white-space: normal; }
     }
 
@@ -373,6 +374,7 @@
       pointer-events: none;
     }
     .project-preview-img.visible { opacity: 1; }
+
 
     /* ─── About ───────────────────────────────────────────── */
     .about-section {
@@ -699,12 +701,11 @@
   <!-- ─── Work ──────────────────────────────────────────── -->
   <section class="work-section" id="work">
     <div class="projects-list">
-      <a href="https://www.kimcatubig.com/keap" div class="project-row" data-project="01" aria-label="Keap">
+      <div class="project-row" data-project="01" aria-label="Keap">
         <a href="https://www.kimcatubig.com/keap" class="project-row-inner" aria-label="View Keap case study">
           <span class="project-num">01</span>
           <span class="project-name">Keap</span>
         </a>
-      </a>
       </div>
       <div class="project-row" data-project="02" aria-label="Pulmonary Practice Associates">
         <a href="https://www.kimcatubig.com/pulmonary-practice-associates" class="project-row-inner" aria-label="View Pulmonary Practice Associates case study">
