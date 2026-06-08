@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kim Catubig — Brand & Marketing Designer</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/placeholder.css" onerror="this.remove()">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Brand tokens ───────────────────────────────────── */
+    :root {
+      --accent: #1600FF;
+      --accent-yellow: #f2ff64;
+      --gray-50: #f7f7f7;
+      --gray-200: #d9d9d9;
+      --gray-500: #6b6b6b;
+      --bg-inverse: #0f0f0f;
+      --text-primary: #0f0f0f;
+      --font-display: 'Swear Display', 'Playfair Display', Georgia, serif;
+      --font-body: 'Arboria', 'DM Sans', system-ui, sans-serif;
+      --px: 80px;
+    }
+
+    @media (max-width: 768px) {
+      :root { --px: 20px; }
+    }
+
+    /* ─── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: #fff;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    p { margin: 0; }
+
+    /* ─── Nav ────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px var(--px);
+      transition: background 0.3s, backdrop-filter 0.3s, border-bottom 0.3s;
+    }
+    .nav.scrolled {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .nav-links {
+      display: flex;
+      gap: 48px;
+    }
+    .nav-links a, .nav-contact {
+      font-family: var(--font-body);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .nav-logo { width: 48px; height: 48px; flex-shrink: 0; }
+    .nav-logo img { width: 100%; height: 100%; }
+    .nav-right { display: flex; justify-content: flex-end; width: 116px; }
+
+    /* hamburger (mobile only) */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* mobile nav overlay */
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 190;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 60px var(--px);
+      gap: 24px;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .nav-mobile-close {
+      position: absolute;
+      top: 28px; right: var(--px);
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* ─── Hero ───────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 910px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-bg-tint {
+      position: absolute;
+      inset: 0;
+      background: #0059ff;
+      mix-blend-mode: hue;
+    }
+    .hero-content {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px var(--px) 100px;
+    }
+    .hero-hello {
+      font-family: var(--font-body);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+    .hero-name-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 20px 0;
+    }
+    .hero-display-name {
+      height: clamp(80px, 10vw, 149px);
+      width: auto;
+    }
+    /* Blue star — top-right of display name */
+    .hero-star {
+      position: absolute;
+      right: clamp(40px, 8%, 140px);
+      top: -8px;
+      width: clamp(20px, 2.5vw, 31px);
+      height: auto;
+      pointer-events: none;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    /* Blue arrow — inline, left of the meta text row, bottom-aligned */
+    .hero-arrow {
+      height: clamp(44px, 5.5vw, 74px);
+      width: auto;
+      flex-shrink: 0;
+      align-self: flex-end;
+      margin-right: 2px;
+      transform: rotate(-30deg);
+      transform-origin: bottom center;
+    }
+    .hero-meta span {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.7vw, 24px);
+      font-weight: 400;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #000;
+      border-radius: 100px;
+      padding: 1px 15px 5px;
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.7vw, 24px);
+      font-weight: 300;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .hero { height: auto; min-height: 560px; }
+      .hero-hello { font-size: 18px; margin-bottom: 20px; }
+      .hero-display-name { height: clamp(52px, 14vw, 80px); }
+      .hero-star { right: 8%; width: 20px; top: -4px; }
+      .hero-arrow { display: none; }
+      .hero-meta { margin-top: 28px; gap: 6px; }
+      .hero-content { padding: 100px 20px 60px; }
+      .hero-meta .hero-arrow { display: none; }
+    }
+
+    /* ─── Marquee ─────────────────────────────────────────── */
+    .marquee-strip {
+      background: var(--bg-inverse);
+      height: 48px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      width: 100%;
+    }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+      padding-right: 32px;
+      flex-shrink: 0;
+    }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 1.28px;
+      color: #fff;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .marquee-sep { width: 10px; height: 10px; flex-shrink: 0; }
+
+    /* ─── Work section ────────────────────────────────────── */
+    .work-section {
+      display: flex;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Desktop: fixed 810px height with side panel */
+    @media (min-width: 769px) {
+      .work-section { height: 810px; }
+    }
+
+    .projects-list {
+      flex: 0 0 50%;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    @media (min-width: 769px) {
+      .projects-list { height: 100%; }
+    }
+
+    .project-row {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 40px 60px 40px var(--px);
+      border-bottom: 1px solid var(--gray-200);
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .project-row:last-child { border-bottom: none; }
+
+    /* Hover / active state: blue bg, yellow num, white name */
+    .project-row:hover,
+    .project-row.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .project-row:hover .project-num,
+    .project-row.active .project-num {
+      color: var(--accent-yellow);
+    }
+    .project-row:hover .project-name,
+    .project-row.active .project-name {
+      color: #fff;
+    }
+
+    .project-row-inner {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      font-size: clamp(22px, 2.4vw, 34px);
+      line-height: normal;
+    }
+    .project-num {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--accent);
+      width: 43px;
+      flex-shrink: 0;
+      transition: color 0.25s;
+    }
+    .project-name {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-style: normal;
+      color: var(--text-primary);
+      transition: color 0.25s;
+    }
+
+    @media (max-width: 768px) {
+      .work-section { width: 100vw; }
+      .projects-list { flex: 0 0 100%; width: 100%; }
+      .project-row { flex: none; padding: 32px 20px; min-height: 80px; }
+      .project-row-inner { font-size: 28px; }
+      .project-name { white-space: normal; }
+    }
+
+    /* Project preview panel — desktop only */
+    .project-preview {
+      flex: 0 0 50%;
+      width: 50%;
+      position: relative;
+      overflow: hidden;
+      background: #0f0f0f;
+    }
+    @media (min-width: 769px) {
+      .project-preview { height: 100%; }
+    }
+    @media (max-width: 768px) {
+      .project-preview { display: none; }
+    }
+
+    .project-preview-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .project-preview-img.visible { opacity: 1; }
+
+    /* ─── About ───────────────────────────────────────────── */
+    .about-section {
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    @media (min-width: 769px) {
+      .about-section { height: 810px; }
+    }
+    @media (max-width: 768px) {
+      .about-section { flex-direction: column; width: 100vw; }
+      .about-image-col { flex: 0 0 auto; width: 100%; min-height: 420px; }
+      .about-headshot { position: relative; width: 100%; display: flex; justify-content: center; align-items: flex-end; }
+      .about-headshot img { max-width: 300px; width: 100%; height: 420px; object-fit: cover; object-position: center top; }
+      .kida-polaroid-wrap { bottom: 16px; right: calc(50% - 300px/2 - 40px); }
+      .about-info-col { flex: 0 0 auto; width: 100%; box-sizing: border-box; padding: 48px 20px; }
+    }
+
+    .about-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .about-bg img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .about-image-col {
+      flex: 0 0 50%;
+      width: 100%;
+      position: relative;
+      min-height: 360px;
+    }
+    .about-headshot {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .about-headshot img {
+      max-width: 700px;
+
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .kida-polaroid-wrap {
+      position: absolute;
+      bottom: 32px;
+      right: 24px;
+    }
+    .kida-polaroid-wrap img {
+      transform: rotate(-15deg);
+      width: clamp(100px, 12vw, 200px);
+      height: auto;
+    }
+    @media (max-width: 768px) {
+      .kida-polaroid-wrap { bottom: 20px; right: 16px; }
+      .kida-polaroid-wrap img { width: 100px; }
+    }
+
+    .about-info-col {
+      flex: 0 0 50%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px var(--px);
+      position: relative;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.5);
+    }
+    .about-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      line-height: 1.04;
+      color: var(--text-primary);
+    }
+    .about-body {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+    .about-body p + p { margin-top: 1em; }
+    .about-body a { font-weight: 700; text-decoration: underline; }
+
+    /* ─── Contact CTA ─────────────────────────────────────── */
+    .contact-section {
+      background: var(--bg-inverse);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 120px var(--px);
+      width: 100%;
+      overflow: hidden;
+      gap: 40px;
+    }
+    @media (max-width: 768px) {
+      .contact-section { flex-direction: column; align-items: flex-start; padding: 80px 20px; }
+    }
+    .contact-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.32px;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    .contact-headline {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5.5vw, 80px);
+      font-weight: 500;
+      letter-spacing: -1.6px;
+      line-height: 1;
+      color: #fff;
+    }
+    .contact-headline em { font-style: italic; color: var(--accent-yellow); }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+      flex-shrink: 0;
+    }
+    .contact-email-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 8px;
+    }
+    .contact-email-row img { width: 24px; height: 24px; flex-shrink: 0; }
+    .contact-email-row span {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      color: #fff;
+      white-space: nowrap;
+    }
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { opacity: 1; }
+    .copy-btn img { width: 18px; height: 18px; }
+    .contact-linkedin span {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--gray-500);
+      white-space: nowrap;
+    }
+    .contact-linkedin:hover span { color: #fff; }
+
+    /* ─── Footer ──────────────────────────────────────────── */
+    .footer {
+      background: var(--bg-inverse);
+      border-top: 1px solid #262626;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px var(--px);
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--gray-500);
+      white-space: nowrap;
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--gray-500);
+      white-space: nowrap;
+    }
+    .footer-links a:hover { color: #fff; }
+
+    /* ─── Copy toast ──────────────────────────────────────── */
+    .copy-toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: #fff;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      padding: 10px 20px;
+      border-radius: 100px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 999;
+    }
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Nav ──────────────────────────────────────────── -->
+  <nav class="nav" id="nav">
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+    </div>
+    <a href="#home" class="nav-logo" aria-label="Home">
+      <img src="Images/kc-logo.svg" alt="KC Logo">
+    </a>
+    <div class="nav-right">
+      <a href="#contact" class="nav-contact">Contact</a>
+    </div>
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div class="nav-mobile-menu" id="mobileMenu">
+    <button class="nav-mobile-close" id="menuClose" aria-label="Close menu">✕</button>
+    <a href="#work" onclick="closeMobileMenu()">Work</a>
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+  </div>
+
+  <!-- ─── Hero ──────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="Images/hero-background.png" alt="">
+      <div class="hero-bg-tint"></div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-hello">Hello! I'm</p>
+
+      <div class="hero-name-wrap">
+        <img src="Images/kim-catubig_display-name-2.svg" alt="Kim Catubig" class="hero-display-name">
+
+      </div>
+
+      <div class="hero-meta" style="align: bottom;">
+        <img src="Images/hero-arrow.svg" alt="" class="hero-arrow" aria-hidden="true">
+        <span>a</span>
+        <span class="pill">Visual Designer</span>
+        <span>with</span>
+        <span class="pill">7+ years</span>
+        <span>of experience across industries.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Marquee ──────────────────────────────────────── -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Brand Identity</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Visual Systems</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Marketing Campaigns</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Art Direction</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Campaign Design</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Brand Strategy</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Typography</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">Brand Identity</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Visual Systems</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Marketing Campaigns</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Art Direction</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Campaign Design</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Brand Strategy</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+      <span class="marquee-item">Typography</span>
+      <img src="Images/asterisk.svg" alt="" class="marquee-sep">
+    </div>
+  </div>
+
+  <!-- ─── Work ──────────────────────────────────────────── -->
+  <section class="work-section" id="work">
+    <div class="projects-list">
+      <div class="project-row" data-project="01" aria-label="Keap">
+        <a href="https://www.kimcatubig.com/keap" class="project-row-inner" aria-label="View Keap case study">
+          <span class="project-num">01</span>
+          <span class="project-name">Keap</span>
+        </a>
+      </div>
+      <div class="project-row" data-project="02" aria-label="Pulmonary Practice Associates">
+        <a href="https://www.kimcatubig.com/pulmonary-practice-associates" class="project-row-inner" aria-label="View Pulmonary Practice Associates case study">
+          <span class="project-num">02</span>
+          <span class="project-name">Pulmonary Practice Associates</span>
+        </a>
+      </div>
+      <div class="project-row" data-project="03" aria-label="Building Hope">
+        <a href="https://www.kimcatubig.com/buiding-hope" class="project-row-inner" aria-label="View Building Hope case study">
+          <span class="project-num">03</span>
+          <span class="project-name">Building Hope</span>
+        </a>
+      </div>
+      <div class="project-row" data-project="04" aria-label="Delaware Public Media">
+        <a href="https://www.kimcatubig.com/delaware-public-media" class="project-row-inner" aria-label="View Delaware Public Media case study">
+          <span class="project-num">04</span>
+          <span class="project-name">Delaware Public Media</span>
+        </a>
+      </div>
+      <div class="project-row" data-project="05" aria-label="The Consortium">
+        <a href="https://www.kimcatubig.com/the-consortium" class="project-row-inner" aria-label="View The Consortium case study">
+          <span class="project-num">05</span>
+          <span class="project-name">The Consortium</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Desktop preview panel -->
+    <div class="project-preview" id="projectPreview">
+      <img src="Images/project-01_preview-img.png" alt="Keap" class="project-preview-img visible" data-for="01">
+      <img src="Images/project-02_preview-img.png" alt="Pulmonary Practice Associates" class="project-preview-img" data-for="02">
+      <img src="Images/project-03_preview-img.png" alt="Building Hope" class="project-preview-img" data-for="03">
+      <img src="Images/project-04_preview-img.png" alt="Delaware Public Media" class="project-preview-img" data-for="04">
+      <img src="Images/project-05_preview-img.png" alt="The Consortium" class="project-preview-img" data-for="05">
+    </div>
+  </section>
+
+  <!-- ─── About ────────────────────────────────────────── -->
+  <section class="about-section" id="about">
+    <div class="about-bg" aria-hidden="true">
+      <img src="Images/about-background.jpeg" alt="">
+    </div>
+
+    <div class="about-image-col">
+      <div class="about-headshot">
+        <img src="Images/kimcatubig-headshot_iso.png" alt="Kim Catubig">
+      </div>
+      <div class="kida-polaroid-wrap">
+        <img src="Images/Kida-polaroid.png" alt="Kida polaroid">
+      </div>
+    </div>
+
+    <div class="about-info-col">
+      <h2 class="about-title">About me</h2>
+      <div class="about-body">
+        <p>I'm a designer based in the New York metro area with 7+ years of experience shaping brands across agencies, SaaS, fintech, and nonprofits. I enjoy turning complex ideas into clear, intentional experiences, whether that means building a visual system, launching a campaign, or creating something people actually connect with.</p>
+        <p>When I'm not designing, I'm out exploring with my dog Kida. She's my reason for early roadtrips over flights, spontaneous hikes, and generally never sitting still. That same restlessness carries into how I think: I'm drawn to puzzles, systems, and finding the elegant solution hiding underneath a messy problem.</p>
+        <p>If you're interested in learning more about how I translate my experiences into my work, <a href="https://www.kimcatubig.com/s/KimCatubig-Resume-2026.pdf" target="_blank">check me out!</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Contact CTA ───────────────────────────────────── -->
+  <section class="contact-section" id="contact">
+    <div>
+      <p class="contact-label">Get in Touch</p>
+      <div class="contact-headline">
+        <p>Let's make</p>
+        <p>something <em>unexpected</em>.</p>
+      </div>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:kimcatubig.design@gmail.com" class="contact-email-row" target="_blank">
+ <button class="copy-btn" id="copyEmailBtn" aria-label="Copy email address">
+        <img src="Images/copy-icon.svg" alt="Copy">
+      </button>        
+        <span>kimcatubig.design@gmail.com</span>
+      </a>
+     
+      <a href="https://www.linkedin.com/in/kimberlycatubig" class="contact-linkedin" target="_blank">
+        <span>LinkedIn</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── Footer ────────────────────────────────────────── -->
+  <footer class="footer">
+    <p class="footer-copy">© 2026 Kimberly Catubig</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="#work">Index</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </footer>
+
+  <!-- Copy toast -->
+  <div class="copy-toast" id="copyToast">Email copied!</div>
+
+  <script>
+    // ─── Nav scroll ────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ─── Mobile menu ───────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuClose = document.getElementById('menuClose');
+
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    menuClose.addEventListener('click', closeMobileMenu);
+    function closeMobileMenu() { mobileMenu.classList.remove('open'); }
+
+    // ─── Project hover / panel swap ────────────────────────
+    // Image on right always shows last-hovered project (defaults to 01).
+    // Hover state (blue bg) only shows while mouse is over a row.
+    const rows = document.querySelectorAll('.project-row');
+    const previewImgs = document.querySelectorAll('.project-preview-img');
+
+    // Show project-01 image by default, no row highlighted
+    function showPreview(id) {
+      previewImgs.forEach(img => img.classList.toggle('visible', img.dataset.for === id));
+    }
+    showPreview('01');
+
+    rows.forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        // Highlight this row
+        rows.forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+        // Swap preview image (persists after mouse leaves)
+        showPreview(row.dataset.project);
+      });
+      row.addEventListener('mouseleave', () => {
+        // Remove hover highlight — image stays
+        row.classList.remove('active');
+      });
+      row.addEventListener('focus', () => {
+        rows.forEach(r => r.classList.remove('active'));
+        row.classList.add('active');
+        showPreview(row.dataset.project);
+      });
+      row.addEventListener('blur', () => row.classList.remove('active'));
+      row.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') showPreview(row.dataset.project);
+      });
+    });
+
+    // ─── Copy email ────────────────────────────────────────
+    const copyBtn = document.getElementById('copyEmailBtn');
+    const toast = document.getElementById('copyToast');
+    let toastTimer;
+
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText('kimcatubig.design@gmail.com').then(() => {
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+      });
+    });
+  </script>
+</body>
+</html>
