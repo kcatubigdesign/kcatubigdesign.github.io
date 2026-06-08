@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="kc-logo">
+<path d="M36 1.15125e-06C22.7452 1.15125e-06 12 10.7452 12 24C25.2548 24 36 13.2548 36 1.15125e-06Z" fill="var(--fill-0, black)"/>
+<path d="M36 48C22.7452 48 12 37.2548 12 24C25.2548 24 36 34.7452 36 48Z" fill="var(--fill-0, black)"/>
+<path d="M12 48C5.37258 48 -5.79387e-07 42.6274 0 36L1.04907e-06 24C6.62742 24 12 29.3726 12 36L12 48Z" fill="var(--fill-0, black)"/>
+<path d="M12 12C12 18.6274 6.62742 24 1.04907e-06 24L0 12C5.79387e-07 5.37258 5.37258 8.64764e-07 12 1.44415e-06L12 12Z" fill="var(--fill-0, black)"/>
+<path d="M48 12C41.3726 12 36 6.62742 36 1.15125e-06L48 0V12Z" fill="var(--fill-0, black)"/>
+<path d="M36 48C36 41.3726 41.3726 36 48 36V48H36Z" fill="var(--fill-0, black)"/>
+</g>
+</svg>
